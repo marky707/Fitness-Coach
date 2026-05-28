@@ -1,4 +1,8 @@
 const WEEKDAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const READINESS_THRESHOLDS = {
+  low: { sleep: 6, hrv: 25, energy: 4, soreness: 8, stress: 8 },
+  high: { sleep: 7, hrv: 30, energy: 7, soreness: 5, stress: 5 }
+};
 
 const BASE_WORKOUTS = {
   'Upper strength': {
@@ -91,10 +95,18 @@ function buildPlanForDay(date, trainingPlanByWeekday) {
 
 function classifyReadiness(checkin) {
   if (!checkin) return 'moderate';
-  const low = checkin.sleepHours < 6 || checkin.hrv < 25 || checkin.energyLevel <= 4 || checkin.sorenessLevel >= 8 || checkin.stressLevel >= 8;
+  const low = checkin.sleepHours < READINESS_THRESHOLDS.low.sleep
+    || checkin.hrv < READINESS_THRESHOLDS.low.hrv
+    || checkin.energyLevel <= READINESS_THRESHOLDS.low.energy
+    || checkin.sorenessLevel >= READINESS_THRESHOLDS.low.soreness
+    || checkin.stressLevel >= READINESS_THRESHOLDS.low.stress;
   if (low) return 'low';
 
-  const high = checkin.sleepHours >= 7 && checkin.hrv >= 30 && checkin.energyLevel >= 7 && checkin.sorenessLevel <= 5 && checkin.stressLevel <= 5;
+  const high = checkin.sleepHours >= READINESS_THRESHOLDS.high.sleep
+    && checkin.hrv >= READINESS_THRESHOLDS.high.hrv
+    && checkin.energyLevel >= READINESS_THRESHOLDS.high.energy
+    && checkin.sorenessLevel <= READINESS_THRESHOLDS.high.soreness
+    && checkin.stressLevel <= READINESS_THRESHOLDS.high.stress;
   if (high) return 'high';
 
   return 'moderate';
