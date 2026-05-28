@@ -1,0 +1,17 @@
+{
+  "name": "adaptive-workout-coach",
+  "version": "1.0.0",
+  "description": "Adaptive Workout Coach MVP",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.8.1",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "multer": "^2.0.2"
+  }
+}
